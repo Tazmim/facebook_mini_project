@@ -97,3 +97,38 @@ function move($file, $path = '/')
 
     return $file_name;
 }
+
+//password check
+
+function passCheck($pass,$cpass)
+{
+    if($pass==$cpass)
+    {
+        return true;
+    }
+    else{
+        return false;
+    }
+
+}
+
+//hash password
+
+function getHash($pass)
+{
+    return password_hash($pass,PASSWORD_DEFAULT);
+}
+function update($sql)
+{
+    connect()->query($sql);
+
+}
+
+//lofin user data
+
+function login_user_data($table,$id)
+{
+   $data =  connect()->query("SELECT*FROM {$table} WHERE id = '$id'");
+   return $data->fetch_object();
+
+}

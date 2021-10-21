@@ -56,3 +56,26 @@ input[type="submit"] {
   padding: 10px 0px;
   background-color: #fff;
 }
+.user-profile {
+  width: 350px;
+  margin: 50px auto 50px;
+}
+
+.user-profile img {
+  height: 270px;
+  width: 270px;
+
+  border: 10px solid #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.image_control {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.user-item {
+  text-align: center;
+  margin-top: 20px;
+}

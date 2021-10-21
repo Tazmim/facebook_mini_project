@@ -1,6 +1,12 @@
 <?php
-include_once "autoload.php";
 
+  include_once "autoload.php";
+  include_once "app/database.php";
+
+  if(userloginCheck()==true)
+  {
+	  header('location:profile.php');
+  }
 
 ?>
 <!DOCTYPE html>
@@ -14,73 +20,87 @@ include_once "autoload.php";
 	<link rel="stylesheet" href="assets/css/responsive.css">
 </head>
 <body>
+	<?php
 	
+	if(isset($_POST['signup']))
+	{
+		 $login = $_POST['login'];
+		  $pass = $_POST['password'];
 	
 
-	<div class="wrap-table">
-		<a href="create.php" class="btn btn-sm btn-primary">Add new students</a>
-		<br>
-		<br>
+	if(empty($login)||empty($pass))
+	{
+		$msg = validate("All fields are required");
+	}
+	else{
+		$login_user_data = authCheck('users','email',$login);
+		if($login_user_data!=false)
+		{
+			if(passwordCheck($pass,$login_user_data->password)==true)
+			{
+				$_SESSION['id'] = $login_user_data->id;
+				header('location:profile.php');
+
+				
+
+			}
+			else
+			{
+				$msg = validate("Invalid password","warning");
+
+			}
+			
+
+		}
+		else{
+			$msg = validate("Invalid email address");
+		}
+	}
+}
+	
+	
+	
+	
+	
+	
+	?>
+<div class="wrap ">
+	<a href="index.php" class="btn btn-sm btn-primary">All Students</a>
+	<br>
 		<div class="card shadow">
+		
 			<div class="card-body">
-				<h2>All Students Data</h2>
-				<table class="table table-striped">
-					<thead>
-						<tr>
-							<th>#</th>
-							<th>Name</th>
-							<th>Email</th>
-							<th>Cell</th>
-							<th>location</th>
-							<th>age</th>
-							<th>gender</th>
-							<th>amount</th>
-							<th>Photo</th>
-							<th>Action</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					<?php
-					$i =1;
-					$data = all('students');
-
-					//while loop chalay table e data gulo show korce
-					
-					
-
-					while($stu = $data->fetch_object()) :
-					
-					
-					?>
-						<tr>
-							<td><?php echo $i;
-							$i++;?></td>
-							<td><?php echo $stu->name;?></td>
-							<td><?php echo $stu->email;?></td>
-							<td><?php echo $stu->cell;?></td>
-							<td><?php echo $stu->location;?></td>
-							<td><?php echo $stu->age;?></td>
-							<td><?php echo $stu->gender;?></td>
-							<td><?php echo $stu->Amount;?></td>
-							<td><img src="media/students/<?php echo $stu->photo ;?>" alt=""></td>
-							<td>
-								<a class="btn btn-sm btn-info" href="#">View</a>
-								<a class="btn btn-sm btn-warning" href="update.php?edit_id=<?php echo $stu->id;?>">Edit</a>
-								<a class="btn btn-sm btn-danger" href="delete.php?delete_id=<?php echo $stu->id;?>">Delete</a>
-							</td>
-						</tr>
-
-						<?php endwhile ;?>
-						
-
-					</tbody>
-				</table>
+				<h2>Login Here</h2>
+				<?php
+				if(isset($msg))
+				{
+					echo $msg;
+				}
+				
+				
+				?>
+				
+				<form action="" method = 'POST' autocomplete = "off">
+					<div class="form-group">
+						<label for="">Login Info</label>
+						<input name = 'login' placeholder = "email or cell or username" class="form-control" type="text" value ="<?php old('login');//old value gulo dhore rekhecehe?>">
+					</div>
+					<div class="form-group">
+						<label for="">Password</label>
+						<input name = 'password' placeholder = "password" class="form-control" type="password" value " ">
+					</div>
+					<div class="form-group">
+						<input name = 'signup' class="btn btn-primary" type="submit" value="Login">
+					</div>
+				</form>
+				<hr>
+				<a href="reg.php">Create an account</a>
 			</div>
 		</div>
 	</div>
-	
 
+  
+	
 
 
 
