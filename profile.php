@@ -7,8 +7,16 @@
 
  }
  else{
+     if(isset($_GET['user_id']))
+     {
+        $login_user = login_user_data('users',$_GET['user_id']);
+     }
+     else{
+        $login_user = login_user_data('users',$_SESSION['id']);
 
-    $login_user = login_user_data('users',$_SESSION['id']);
+     }
+
+   
  }
  
 ?>

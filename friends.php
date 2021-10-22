@@ -34,27 +34,30 @@
     include_once "template/menu.php";
    
    ?>
-   <div class="container">
+  <div class="container">
      
-       <div class="row">
-       <?php
-      $all_user = all('users');
+     <div class="row">
+     <?php
+    $all_user = all('users');
 
-      while($users = $all_user->fetch_object()):
-      
-      
-      
-      ?>
+    while($users = $all_user->fetch_object()):
+    
+    ?>
+      <?php if($users->id!=$_SESSION['id']):?>
 
-           <div class="col-md-3">
-               <img style = "height:150px;width:150px;border-radius:50%;object-fit:cover;margin-top:20px;" src="media/users/<?php echo $users->photo?>" alt="">
-               <h4><?php echo $users->name;?></h4>
-               <button class="btn btn-primary">View profile</button>
-           </div>
-           <?php endwhile ;?>
-       </div>
-       
-   </div>
+         <div class="col-md-3">
+             <img style = "height:150px;width:150px;border-radius:50%;object-fit:cover;margin-top:20px;" src="media/users/<?php echo $users->photo?>" alt="">
+             <h4><?php echo $users->name;?></h4>
+            <a href="profile.php?user_id=<?php echo $users->id ;?>" class="btn btn-primary">view profile</a>
+            <?php endif;?>
+           
+         </div>
+         <?php endwhile ;?>
+         
+     </div>
+     
+     
+ </div>
 
 
   
