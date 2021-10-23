@@ -38,21 +38,26 @@
      
      <div class="row">
      <?php
-    $all_user = all('users');
+        $all_user = all('users');
 
-    while($users = $all_user->fetch_object()):
-    
+        while($users = $all_user->fetch_object()):
+        if($users->id != $_SESSION['id']):
+        
     ?>
-      <?php if($users->id!=$_SESSION['id']):?>
-
          <div class="col-md-3">
-             <img style = "height:150px;width:150px;border-radius:50%;object-fit:cover;margin-top:20px;" src="media/users/<?php echo $users->photo?>" alt="">
-             <h4><?php echo $users->name;?></h4>
+            <img style = "height:150px;width:150px;border-radius:50%;object-fit:cover;margin-top:20px;" src="media/users/<?php echo $users->photo?>" alt="">
+                <h4><?php echo $users->name;?></h4>
             <a href="profile.php?user_id=<?php echo $users->id ;?>" class="btn btn-primary">view profile</a>
-            <?php endif;?>
-           
+             
          </div>
-         <?php endwhile ;?>
+
+      
+     <?php endif; endwhile;?>
+
+         
+    
+    
+    
          
      </div>
      
