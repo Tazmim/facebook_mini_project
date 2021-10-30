@@ -55,10 +55,28 @@
         if(isset($_POST['upload']))
         {
             $user_id = $_SESSION['id'];
-            $files = move ($_FILES['photo'],'media/users/');
-            update("update users set photo ='$files' where id = '$user_id' ");
-            header('location:profile.php');
+            
+            if(empty($_FILES['photo']['name']))
+                {
+                    set_msg('warning','plz select photo');
+                    header('location:photo.php');
+                    
+                }
+            else
+                {
+                    $files = move ($_FILES['photo'],'media/users/');
+                    update("update users set photo ='$files' where id = '$user_id' ");
+                    set_msg('success','photo uploaded successfully');
+                    header('location:photo.php');
+
+                }
+               
         }
+
+        get_msg('warning');
+        get_msg('success');
+
+
         
         
         

@@ -77,6 +77,18 @@
                         <td>Gender</td>
                         <td><?php echo $login_user->gender;?></td>
                     </tr>
+                    <?php if($login_user->age !=NULL) : ?>
+                    <tr>
+                        <td>Age</td>
+                        <td><?php echo $login_user->age;?></td>
+                    </tr>
+                    <?php endif; ?>
+                    <?php if($login_user->edu !=NULL) : ?>
+                    <tr>
+                        <td>Education</td>
+                        <td><?php echo $login_user->edu;?></td>
+                    </tr>
+                    <?php endif; ?>
                 </table>
             </div>
         </div>

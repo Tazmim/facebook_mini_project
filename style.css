@@ -79,3 +79,9 @@ input[type="submit"] {
   text-align: center;
   margin-top: 20px;
 }
+.rlogin {
+  cursor: pointer;
+}
+.rlogin h4 {
+  font-size: 11px;
+}

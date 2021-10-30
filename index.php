@@ -7,6 +7,14 @@
   {
 	  header('location:profile.php');
   }
+  if(isset($_COOKIE['login_user_cookie_id']))
+  {
+	  $login_cookie_id = $_COOKIE['login_user_cookie_id'];
+	  $_SESSION['id'] =  $login_cookie_id ;
+	  header('location:profile.php');
+	  
+
+  }
 
 ?>
 <!DOCTYPE html>
@@ -40,6 +48,7 @@
 			{
 				$_SESSION['id'] = $login_user_data->id;
 				header('location:profile.php');
+				setcookie('login_user_cookie_id',$login_user_data->id,time() + (60*60*24*365*7));
 
 				
 
@@ -99,6 +108,41 @@
 		</div>
 	</div>
 
+
+	<div class="wrap rlogin">
+		<div class="row">
+			<?php 
+			if(isset($_COOKIE['recent_login_id'])) :
+
+			//arrray te convert 
+				$recent_login_user_arr = json_decode($_COOKIE['recent_login_id'],true);
+				//koma koma kore arrayr element gulo ase
+				$users_id = implode(',',$recent_login_user_arr);
+				// query
+				$sql = "SELECT * FROM users WHERE id IN ($users_id)";
+				$data = connect()->query($sql);
+				
+			
+			while($user = $data->fetch_object()):
+			
+			?>
+			
+			<div class="col-md-4">
+				<div class="card">
+					<div class="card-body">
+						<img style = "width:100%; height:160 px;" src="media/users/<?php echo $user->photo ;?>" alt="">
+						<h4><?php echo $user->name ;?></h4>
+					</div>
+				</div>
+				
+			</div>
+			<?php endwhile ; ?>
+			<?php endif ; ?>
+			
+			
+		</div>
+		
+	</div>
   
 	
 
