@@ -2,15 +2,52 @@
 
   include_once "autoload.php";
   include_once "app/database.php";
+
+  //login with recent login cookie
+
+  if(isset($_GET['recent_login_now']))
+  { 
+      //cookie value ta ke akta variable e store korlam
+	  $login_now = $_GET['recent_login_now'];
+	  //cookie set korlam
+	  setcookie('login_user_cookie_id',$login_now,time() + (60*60*24*365*7));
+	  header('location:index.php');
+  }
+  else{
+	setcookie('login_user_cookie_id','',time() - (60*60*24*365*7));
+  }
   
  
 
   // recent login data management with cookie
   if(isset($_GET['rlc_id']))
   {
-	
+	 // recent login close id ta ke dhorlam
 	  echo $rlc_id = $_GET['rlc_id'];
+	   // json data ke array te convert
+	  $rl_arr =  json_decode($_COOKIE['recent_login_id'],true);
+	   // arrayr repated item gulo badh dilam
+	  $rlu_id = array_unique($rl_arr);
+	   // recent logout id ta arrayr koto number index a eche
+	  $index = array_search($rlc_id,$rlu_id); 
+	  //oi index ta splice er maddhome delete korlam
+	  array_splice($rlu_id,$index,1);
+
+	  if(count($rlu_id)>0)
+	  {
+		  setcookie('recent_login_id',json_encode($rlu_id),time() + (60*60*24*365*7) );
+
+	  }
+	  else{
+
+		 setcookie('recent_login_id','',time() - (60*60*24*365*7) );
+
+
+	  }
+	  header('location:index.php');
+
   }
+   // recent login data management with cookie end here
 
   
 
@@ -142,8 +179,8 @@
 				<div class="card">
 					<div class="card-body">
 						<!-- Id take url e pathono holo -->
-						<a class="close" href="?rlc_id =<?php echo $user->id;?>">&times;</a>
-						<a href="#"><img style = "width:100%; height:160 px;" src="media/users/<?php echo $user->photo ;?>" alt="">
+						<a class="close" href="?rlc_id=<?php echo $user->id;?>">&times;</a>
+						<a href="?recent_login_now=<?php echo $user->id;?>"><img style = "width:100%; height:160 px;" src="media/users/<?php echo $user->photo ;?>" alt="">
 						<h4><?php echo $user->name ;?></h4></a>
 					</div>
 				</div>
