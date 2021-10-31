@@ -2,6 +2,17 @@
 
   include_once "autoload.php";
   include_once "app/database.php";
+  
+ 
+
+  // recent login data management with cookie
+  if(isset($_GET['rlc_id']))
+  {
+	
+	  echo $rlc_id = $_GET['rlc_id'];
+  }
+
+  
 
   if(userloginCheck()==true)
   {
@@ -130,8 +141,10 @@
 			<div class="col-md-4">
 				<div class="card">
 					<div class="card-body">
-						<img style = "width:100%; height:160 px;" src="media/users/<?php echo $user->photo ;?>" alt="">
-						<h4><?php echo $user->name ;?></h4>
+						<!-- Id take url e pathono holo -->
+						<a class="close" href="?rlc_id =<?php echo $user->id;?>">&times;</a>
+						<a href="#"><img style = "width:100%; height:160 px;" src="media/users/<?php echo $user->photo ;?>" alt="">
+						<h4><?php echo $user->name ;?></h4></a>
 					</div>
 				</div>
 				
